@@ -1,1 +1,1 @@
-/* apenas para criar a branch da develop */
+/* branch buscar postagem */
