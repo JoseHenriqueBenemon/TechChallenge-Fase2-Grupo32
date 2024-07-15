@@ -1,8 +1,9 @@
-import express, { Express, Request, Response} from "express";
+import { app } from "./app";
+import { env } from "./configs/env-config";
 
-export const app: Express = express();
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("Application running successful!")
-})
-
+app.listen({
+    host: env.HOST, 
+    port: env.PORT
+    }, () => {
+    console.log(`Server is running on http://${env.HOST}:${env.PORT}`);
+});
