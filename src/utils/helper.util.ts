@@ -33,3 +33,13 @@ export async function hashPassword(password: string): Promise<String> {
 export async function comparePassword(password: string, hash: string): Promise<Boolean> {
     return await bcrpyt.compare(password, hash);
 }
+
+/**
+ * Calcule o offset para consultas paginadas.
+ * @param {number} page - O número da página atual.
+ * @param {number} limit - O número de itens por página.
+ * @returns {number} Offset calculado 
+ */
+export function calculateOffset(page: number, limit: number): number {
+    return (page - 1) * limit;
+}

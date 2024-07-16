@@ -1,9 +1,9 @@
 export interface IUser {
-    id?: number;
+    id?: number | undefined;
     name: string;
     email: string;
     password: string;
-    role: 'student' | 'teacher';
+    role: 'Student' | 'Teacher';
     registrationNumber?: string;
     department?: string;
     createdAt: Date;

@@ -1,5 +1,7 @@
 import { DataSource } from "typeorm";
 import { env } from "./env-config";
+import { Post } from "../models/post.model";
+import { User } from "../models/user.model";
 
 export const appDataSource = new DataSource({
     type: "postgres",
@@ -9,14 +11,11 @@ export const appDataSource = new DataSource({
     password: env.DATABASE_PASSWORD,
     database: env.DATABASE_NAME,
     logging: env.NODE_ENV === "development",
-    entities: [],
+    entities: [Post, User],
     migrations: []
 });
 
 appDataSource.initialize()
-.then(() => {
-    console.log("DataBase with typeorm connected!");
-})
 .catch((err) => {
-    console.error("Error conneting to database with typeorm. Error: ", err);
+    console.error("Error conneting to database. Error: ", err);
 });

@@ -1,8 +1,11 @@
+import postRoutes from "./routes/post.routes";
+import { errorHandler } from "./errorHandler";
 import express, { Express, Request, Response} from "express";
 
 export const app: Express = express();
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Application running successful!")
-})
+app.use(errorHandler);
 
+app.use('/api', postRoutes)
+
+export default app;

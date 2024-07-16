@@ -1,6 +1,6 @@
-CREATE TYPE user_role AS ENUM ('student', 'teacher');
-CREATE  TYPE post_category_subject AS ENUM ('Math', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography', 'Portuguese', 'English', 'Literature', 'Physical Education', 'Arts', 'Sociology', 'Philosophy');
-CREATE  TYPE post_status AS ENUM ('Active', 'Inactive');
+CREATE TYPE user_role AS ENUM ('Student', 'Teacher');
+CREATE TYPE post_category_subject AS ENUM ('Math', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography', 'Portuguese', 'English', 'Literature', 'Physical Education', 'Arts', 'Sociology', 'Philosophy');
+CREATE TYPE post_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -29,7 +29,7 @@ CREATE TABLE posts (
     description TEXT NOT NULL,
     category_subject post_category_subject NOT NULL,
     status post_status NOT NULL, 
-    limit_date TIMESTAMP WITHOUT TIME ZONE, 
+    limit_date TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

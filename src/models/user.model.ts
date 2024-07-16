@@ -1,10 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IUser } from "./interfaces/user.interface";
+import { Post } from "./post.model";
 
 @Entity({
     name: 'users'
 })
 export class User implements IUser{
+    createdAt: Date;
+    updatedAt: Date;
     @PrimaryGeneratedColumn('increment', { 
         name: 'id'
     })
@@ -12,34 +15,38 @@ export class User implements IUser{
 
     @Column({
         name: 'name',
-        type: 'varchar'
+        type: 'varchar',
+        length: 50
     })    
     name: string;
 
     @Column({
         name: 'email',
         type: 'varchar',
+        length: 255,
         unique: true
     })
     email: string;
 
     @Column({
         name: 'password',
-        type: 'varchar'
+        type: 'varchar',
+        length: 255
     })
     password: string;  
     
     @Column({
         name: 'role',
         type: 'enum',
-        enum: ['student', 'teacher'],
-        default: 'student'
+        enum: ['Student', 'Teacher'],
+        default: 'Student'
     })
-    role: 'student' | 'teacher';
+    role: 'Student' | 'Teacher';
 
     @Column({
         name: 'registration_number',
         type: 'varchar',
+        length: 50,
         nullable: true
     })
     registrationNumber?: string | undefined;
@@ -47,14 +54,25 @@ export class User implements IUser{
     @Column({
         name: 'department',
         type: 'varchar',
+        length: 50,
         nullable: true
     })
     department?: string | undefined;
 
-    @CreateDateColumn()
-    createdAt: Date;
+    @CreateDateColumn({
+        name: 'created_at'
+    })
+    created_at: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @UpdateDateColumn({
+        name: 'updated_at'
+    })
+    updated_at: Date;
+
+    @OneToMany(
+        () => Post, 
+        post => post.user
+    )
+    posts: Post[]
     
 }
