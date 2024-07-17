@@ -1,18 +1,4 @@
-import * as crypto from 'crypto';
 import * as bcrpyt from 'bcrypt';
-
-/**
- * Formata uma data para o formato DD/MM/YYYY.
- * @param {Date} date - Data para ser formatada.
- * @returns {string} Data formatada.
- */
-export function formatDate(date: Date): string {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    
-    return `${day}/${month}/${year}`;
-}
 
 /**
  * Gera um hash para a senha.

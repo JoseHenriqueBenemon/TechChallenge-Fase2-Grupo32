@@ -1,4 +1,4 @@
-import { calculateOffset, formatDate } from "../../utils/helper.util";
+import { calculateOffset } from "../../utils/helper.util";
 import { appDataSource } from "../../configs/database";
 import { Post } from "../../models/post.model";
 
@@ -7,7 +7,7 @@ export async function getAllPosts(page: number, limit: number) {
     
     const skip = calculateOffset(page, limit);
 
-    const posts = await postRepository.findAndCount({
+    const posts = await postRepository.find({
         skip,
         take: limit
     });
