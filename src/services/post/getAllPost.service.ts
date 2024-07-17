@@ -8,6 +8,7 @@ export async function getAllPosts(page: number, limit: number) {
     const skip = calculateOffset(page, limit);
 
     const posts = await postRepository.find({
+        relations: ["user"],
         skip,
         take: limit
     });
