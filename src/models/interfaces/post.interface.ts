@@ -1,3 +1,5 @@
+import { IUser } from "./user.interface";
+
 export interface IPost{
     id?: number | undefined;
     title: string;
@@ -18,6 +20,7 @@ export interface IPost{
         "Philosophy";
     status: "Active" | "Inactive";
     limit_date: Date;
-    created_at: Date;
-    updated_at: Date;
+    created_at?: Date;
+    updated_at?: Date;
+    user?: IUser
 }

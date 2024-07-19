@@ -1,10 +1,8 @@
+import { postRepository } from "../../repository/post.repository";
 import { calculateOffset } from "../../utils/helper.util";
-import { appDataSource } from "../../configs/database";
-import { Post } from "../../models/post.model";
+import { IPost } from "models/interfaces/post.interface";
 
-export async function getAllPosts(page: number, limit: number) {
-    const postRepository = appDataSource.getRepository(Post);
-    
+export async function getAllPosts(page: number, limit: number): Promise<IPost[]> {
     const skip = calculateOffset(page, limit);
 
     const posts = await postRepository.find({

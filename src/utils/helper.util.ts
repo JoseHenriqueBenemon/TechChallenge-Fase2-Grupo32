@@ -5,7 +5,7 @@ import * as bcrpyt from 'bcrypt';
  * @param {string} password - Senha original. 
  * @returns {Promise<String>} Hash da senha.
  */
-export async function hashPassword(password: string): Promise<String> {
+export async function hashPassword(password: string): Promise<string> {
     const saltRound = 8;
     return await bcrpyt.hash(password,saltRound);
 }

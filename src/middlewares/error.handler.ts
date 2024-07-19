@@ -1,3 +1,4 @@
+import { ZodError } from "zod";
 import { env } from "../configs/env-config";
 import { NextFunction, Request, Response } from "express";
 
@@ -10,9 +11,24 @@ interface ErrorHandlerMap {
 };
 
 export const errorHandlerMap: ErrorHandlerMap = {
-    NotFoundError: (err, req, res) => {
+    ZodError: (err, _, res) => {
+        return res
+        .status(400)
+        .json({
+            message: "Validation error",
+            ...(err  instanceof ZodError && { error: err.format() })
+        })
+    },
+    NotFoundError: (err, _, res) => {
         return res
         .status(404)
+        .json({
+            message: err.message
+        })
+    },
+    ConflictError: (err, _, res) => {
+        return res
+        .status(409)
         .json({
             message: err.message
         })
@@ -21,7 +37,6 @@ export const errorHandlerMap: ErrorHandlerMap = {
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
     const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-    console.log(err.constructor.name);
     const handler = errorHandlerMap[err.constructor.name];
 
     if(handler) {
@@ -32,5 +47,5 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
         console.error(err);
     }
 
-    return res.status(statusCode).json({ message: "Internal Server Error"});
+    return res.status(statusCode).json({ message: err.message });
 }

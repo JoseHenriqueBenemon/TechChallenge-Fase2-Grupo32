@@ -1,9 +1,8 @@
+import { postRepository } from "../../repository/post.repository";
 import { NotFoundError } from "../../errors/NotFoundError";
-import { appDataSource } from "../../configs/database";
-import { Post } from "../../models/post.model";
+import { IPost } from "models/interfaces/post.interface";
 
-export async function getPostById(idPost: number) {
-    const postRepository = appDataSource.getRepository(Post);
+export async function getPostById(idPost: number): Promise<IPost> {
     const post = await postRepository.findOne({
         relations: ['user'],
         where: {

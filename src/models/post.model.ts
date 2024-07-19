@@ -67,7 +67,7 @@ export class Post implements IPost {
             from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
         }
     })
-    created_at: Date;
+    created_at?: Date;
 
     @UpdateDateColumn({
         name: 'updated_at',
@@ -76,12 +76,12 @@ export class Post implements IPost {
             from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
         }
     })
-    updated_at: Date;
+    updated_at?: Date;
 
     @ManyToOne(
         () => User, 
         user => user.posts
     )
     @JoinColumn({ name: 'user_id' })
-    user: User;
+    user?: User;
 }

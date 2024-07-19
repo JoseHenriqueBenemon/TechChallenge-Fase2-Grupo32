@@ -1,13 +1,12 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IUser } from "./interfaces/user.interface";
 import { Post } from "./post.model";
+import { IPost } from "./interfaces/post.interface";
 
 @Entity({
     name: 'users'
 })
 export class User implements IUser{
-    createdAt: Date;
-    updatedAt: Date;
     @PrimaryGeneratedColumn('increment', { 
         name: 'id'
     })
@@ -49,7 +48,7 @@ export class User implements IUser{
         length: 50,
         nullable: true
     })
-    registrationNumber?: string | undefined;
+    registration_number?: string | undefined;
 
     @Column({
         name: 'department',
@@ -60,19 +59,27 @@ export class User implements IUser{
     department?: string | undefined;
 
     @CreateDateColumn({
-        name: 'created_at'
+        name: 'created_at',
+        transformer: {
+            to: (value: Date) => value,
+            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
+        }
     })
-    created_at: Date;
+    created_at?: Date;
 
     @UpdateDateColumn({
-        name: 'updated_at'
+        name: 'updated_at',
+        transformer: {
+            to: (value: Date) => value,
+            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
+        }
     })
-    updated_at: Date;
+    updated_at?: Date;
 
     @OneToMany(
         () => Post, 
         post => post.user
     )
-    posts: Post[]
+    posts?: IPost[]
     
 }
