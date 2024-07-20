@@ -1,4 +1,3 @@
-import { appDataSource } from "configs/database";
 import { IUser } from "../../models/interfaces/user.interface";
 import { userRepository } from "../../repository/user.repository";
 import { calculateOffset } from "../../utils/helper.util";

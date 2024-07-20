@@ -5,7 +5,6 @@ import { hashPassword } from "../../utils/helper.util";
 
 
 export async function createUser(userData: IUser): Promise<IUser> {
-    
     const existingUser = await userRepository.findOne({where: { email: userData.email }});
     if (existingUser) {
         throw new ConflictError("Email already registered!");
