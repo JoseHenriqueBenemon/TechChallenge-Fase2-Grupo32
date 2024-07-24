@@ -60,19 +60,13 @@ export class User implements IUser{
 
     @CreateDateColumn({
         name: 'created_at',
-        transformer: {
-            to: (value: Date) => value,
-            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
-        }
+        type: 'timestamptz'
     })
     created_at?: Date;
 
     @UpdateDateColumn({
         name: 'updated_at',
-        transformer: {
-            to: (value: Date) => value,
-            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
-        }
+        type: 'timestamptz'
     })
     updated_at?: Date;
 

@@ -2,7 +2,6 @@ import { postRepository } from "../../repository/post.repository";
 import { NotFoundError } from "../../errors/NotFoundError";
 import { IPost } from "../../models/interfaces/post.interface";
 import { MoreThanOrEqual } from "typeorm";
-import { PostStatus } from "../../models/post.model";
 
 export async function getPostById(idPost: number): Promise<IPost> {
     const post = await postRepository.findOne({
@@ -22,7 +21,7 @@ export async function getPostById(idPost: number): Promise<IPost> {
         },
         where: {
             limit_date: MoreThanOrEqual(new Date()),
-            status: PostStatus.Active,
+            status: "Active",
             id: idPost
         }
     });

@@ -2,7 +2,6 @@ import { MoreThanOrEqual } from "typeorm";
 import { postRepository } from "../../repository/post.repository";
 import { calculateOffset } from "../../utils/helper.util";
 import { IPost } from "../../models/interfaces/post.interface";
-import { PostStatus } from "../../models/post.model";
 
 export async function getAllPosts(page: number, limit: number): Promise<IPost[]> {
     const skip = calculateOffset(page, limit);
@@ -26,7 +25,7 @@ export async function getAllPosts(page: number, limit: number): Promise<IPost[]>
         take: limit,
         where: {
             limit_date: MoreThanOrEqual(new Date()),
-            status: PostStatus.Active
+            status: "Active"
         }
     });
 

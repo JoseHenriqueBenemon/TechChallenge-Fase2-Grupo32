@@ -29,3 +29,24 @@ export async function comparePassword(password: string, hash: string): Promise<B
 export function calculateOffset(page: number, limit: number): number {
     return (page - 1) * limit;
 }
+
+/**
+ * Valida se um email é válido.
+ * @param {string} email - O email a ser validado.
+ * @returns {boolean} True se o email for válido, caso contrário false.
+ */
+export function isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+/**
+ * Valida se uma senha atende aos critérios especificados.
+ * Critérios: Pelo menos 8 caracteres, pelo menos uma letra minúscula, uma letra maiúscula, um dígito e um caractere especial.
+ * @param {string} password - A senha a ser validada.
+ * @returns {boolean} True se a senha atender aos critérios, caso contrário false.
+ */
+export function isValidPassword(password: string): boolean {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+}

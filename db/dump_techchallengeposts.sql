@@ -1,3 +1,4 @@
+SET timezone = 'America/Sao_Paulo';
 CREATE TYPE user_role AS ENUM ('Student', 'Teacher');
 CREATE TYPE post_category_subject AS ENUM ('Math', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography', 'Portuguese', 'English', 'Literature', 'Physical Education', 'Arts', 'Sociology', 'Philosophy');
 CREATE TYPE post_status AS ENUM ('Active', 'Inactive');
@@ -10,17 +11,9 @@ CREATE TABLE users (
     role user_role NOT NULL,
     registration_number VARCHAR(50),
     department VARCHAR(50),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = CURRENT_TIMESTAMP;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
@@ -29,18 +22,8 @@ CREATE TABLE posts (
     description TEXT NOT NULL,
     category_subject post_category_subject NOT NULL,
     status post_status NOT NULL, 
-    limit_date TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    limit_date TIMESTAMPTZ NOT NULL DEFAULT NOW(), 
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
-CREATE OR REPLACE TRIGGER update_users_updated_at
-BEFORE UPDATE ON users
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();
-
-CREATE OR REPLACE TRIGGER update_posts_updated_at
-BEFORE UPDATE ON posts
-FOR EACH ROW
-EXECUTE FUNCTION update_updated_at_column();

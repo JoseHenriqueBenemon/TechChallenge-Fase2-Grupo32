@@ -32,10 +32,17 @@ export const errorHandlerMap: ErrorHandlerMap = {
         .json({
             message: err.message
         })
+    },
+    ValidationError: (err, _, res) => {
+        return res
+        .status(400)
+        .json({
+            message: err.message
+        })
     }
 };
 
-export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {    
     const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
     const handler = errorHandlerMap[err.constructor.name];
 

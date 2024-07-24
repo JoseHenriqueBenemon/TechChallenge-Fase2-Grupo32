@@ -2,28 +2,9 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, Up
 import { IPost } from './interfaces/post.interface';
 import { User } from './user.model';
 
-export enum CategorySubject {
-    Math = 'Math',
-    Biology = 'Biology',
-    Physics = 'Physics',
-    Chemistry = 'Chemistry',
-    History = 'History',
-    Geography = 'Geography',
-    Portuguese = 'Portuguese',
-    English = 'English',
-    Literature = 'Literature',
-    PhysicalEducation = 'Physical Education',
-    Arts = 'Arts',
-    Sociology = 'Sociology',
-    Philosophy = 'Philosophy'
-}
-
-export enum PostStatus {
-    Active = 'Active',
-    Inactive = 'Inactive'
-}
-
-@Entity({ name: 'posts' })
+@Entity({ 
+    name: 'posts' 
+})
 export class Post implements IPost {
     @PrimaryGeneratedColumn('increment', { name: 'id' })
     id?: number;
@@ -37,44 +18,33 @@ export class Post implements IPost {
     @Column({
         name: 'category_subject',
         type: 'enum',
-        enum: CategorySubject
+        enum: ["Math" , "Biology" , "Physics" , "Chemistry" , "History" , "Geography" , "Portuguese" , "English" , "Literature" , "Physical Education" , "Arts" , "Sociology" , "Philosophy"]
     })
-    category_subject: CategorySubject;
+    category_subject: "Math" | "Biology" | "Physics" | "Chemistry" | "History" | "Geography" | "Portuguese" | "English" | "Literature" | "Physical Education" | "Arts" | "Sociology" | "Philosophy";
 
     @Column({
         name: 'status',
         type: 'enum',
-        enum: PostStatus,
-        default: PostStatus.Inactive
+        enum: ['Active', 'Inactive'],
+        default: 'Inactive'
     })
-    status: PostStatus;
+    status: 'Active' | 'Inactive';
 
     @Column({
         name: 'limit_date',
-        type: 'timestamp',
-        default: () => 'CURRENT_TIMESTAMP',
-        transformer: {
-            to: (value: Date) => value,
-            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
-        }
+        type: 'timestamptz'
     })
     limit_date: Date;
 
     @CreateDateColumn({
         name: 'created_at',
-        transformer: {
-            to: (value: Date) => value,
-            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
-        }
+        type: 'timestamptz'
     })
     created_at?: Date;
 
     @UpdateDateColumn({
         name: 'updated_at',
-        transformer: {
-            to: (value: Date) => value,
-            from: (value: string | null) => value ? new Date(value).toLocaleDateString() : null,
-        }
+        type: 'timestamptz'
     })
     updated_at?: Date;
 
