@@ -3,11 +3,11 @@ import app from '../../../src/app';
 import { appDataSource } from '../../../src/configs/database';
 
 beforeAll(async () => {
-    await appDataSource.initialize(); // Inicializa o DataSource antes dos testes
+    await appDataSource.initialize();
 });
 
 afterAll(async () => {
-    await appDataSource.destroy(); // Fecha a conexão do DataSource após os testes
+    await appDataSource.destroy();
 });
 
 describe('User API', () => {

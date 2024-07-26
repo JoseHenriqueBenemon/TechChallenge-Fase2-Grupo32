@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "npx tsc",
     "start": "node dist/src/server.js",
-    "start:dev": "nodemon src/server.ts"
+    "start:dev": "nodemon --files src/server.ts"
   },
   "repository": {
     "type": "git",
