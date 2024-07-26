@@ -1,3 +1,4 @@
+import { ForbiddenError } from "../../errors/ForbiddenError";
 import { NotFoundError } from "../../errors/NotFoundError";
 import { IUser } from "../../models/interfaces/user.interface";
 import { userRepository } from "../../repository/user.repository";
@@ -10,6 +11,8 @@ export async function updateUser(idUser: number, userData: Partial<IUser>): Prom
     if (!user) {
         throw new NotFoundError(`User with ID ${idUser} not found`);
     }
+
+    if (userData.role === "Teacher" && user.role === "Student") throw new ForbiddenError("Students cannot change their role to Teacher!");
 
     await validateUserData({ ...userData, id: idUser }, true);
 
