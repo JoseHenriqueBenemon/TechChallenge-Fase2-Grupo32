@@ -14,11 +14,11 @@ export async function validateUserData(userData: Partial<IUser>, isUpdate: boole
     }
 
     if (userData.role === "Student" && !userData.registration_number) {
-        throw new ValidationError("Registration number is required for students.");
+        throw new ValidationError("registration_number is required for students.");
     }
 
     if (userData.role === "Teacher" && !userData.department) {
-        throw new ValidationError("Department is required for teachers.");
+        throw new ValidationError("department is required for teachers.");
     }
 
     if (userData.email) {

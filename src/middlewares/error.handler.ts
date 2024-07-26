@@ -46,7 +46,14 @@ export const errorHandlerMap: ErrorHandlerMap = {
         .json({
             message: err.message
         })
-    } 
+    },
+    ForbiddenError: (err, _, res) => {
+        return res
+        .status(403)
+        .json({
+            message: err.message
+        })
+    }
 };
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {    
