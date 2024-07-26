@@ -19,6 +19,11 @@ export const userBodySchema = z.object({
     ).optional()
 });
 
+export const signinUserBodySchema = z.object({
+    email: z.string(),
+    password: z.string()
+});
+
 export const userParamsSchema = z.object({
     id: z.coerce.number().min(1, "Id is required")
 });

@@ -3,8 +3,9 @@ import { getAllUsers } from "../services/user/getAllUsers.service";
 import { getUserById } from "../services/user/getUserById.service";
 import { createUser } from "../services/user/createUser.service";
 import { updateUser } from "../services/user/updateUser.service";
+import { loginUser } from "../services/user/loginUser.service";
 import { formatUserResponse } from "../utils/formatUserResponse.util";
-import { userBodySchema , userParamsSchema, userQuerySchema } from "../validation/user.schema";
+import { signinUserBodySchema, userBodySchema , userParamsSchema, userQuerySchema } from "../validation/user.schema";
 
 export async function getUsers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -33,7 +34,6 @@ export async function addUser(req: Request, res: Response, next: NextFunction) {
         const { name, email, password, role, registration_number, department, posts } = userBodySchema.parse(req.body);
 
         const user = await createUser({ name, email, password, role, registration_number, department, posts });
-
         res.status(201).json(formatUserResponse(user));
     } catch(error) {
         next(error);
@@ -47,6 +47,17 @@ export async function modifyUser(req: Request, res: Response, next: NextFunction
 
         const modifiedUser = await updateUser(id, { name, email, password, role, registration_number, department, posts });
         res.status(200).json(formatUserResponse(modifiedUser));
+    } catch (error) {
+        next(error);
+    }
+}
+
+export async function signinUser(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { email, password } = signinUserBodySchema.parse(req.body);
+
+        const token = await loginUser(email, password);
+        res.status(200).json({ token });
     } catch (error) {
         next(error);
     }
