@@ -21,12 +21,12 @@ export async function getAllPosts(page: number, limit: number): Promise<IPost[]>
                 name: true
             }
         },
-        skip,
-        take: limit,
         where: {
             limit_date: MoreThanOrEqual(new Date()),
             status: "Active"
-        }
+        },
+        skip,
+        take: limit,
     });
 
     return posts;
