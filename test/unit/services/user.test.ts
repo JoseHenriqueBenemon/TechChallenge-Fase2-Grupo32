@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../../../src/app';
+import { describe, it, beforeAll, afterAll, expect } from "@jest/globals"; 
 import { appDataSource } from '../../../src/configs/database';
 
 beforeAll(async () => {
@@ -21,6 +22,7 @@ describe('User API', () => {
         };
 
         const response = await request(app).post('/api/users').send(userData);
+        
         expect(response.statusCode).toBe(201);
         expect(response.body).toEqual(expect.objectContaining({
             name: userData.name,
@@ -39,23 +41,48 @@ describe('User API', () => {
             registration_number: '000002' 
         };
 
-        const user = await request(app).post('/api/users').send(createUserData);
+        const userResponse = await request(app).post('/api/users').send(createUserData);
+        const user = userResponse.body;
+
+        const loginResponse = await request(app).post('/api/users/signin').send({ email: createUserData.email, password: createUserData.password });
+        const loginToken = loginResponse.body.token;
 
         const updateUserData = {
             name: "User Test Updated",
             email: "user.test.updated@test.com"
         };
 
-        await request(app)
-            .put(`/api/users/${user.body.id}`)
+        const updateResponse = await request(app)
+            .put(`/api/users/${user.id}`)
             .send(updateUserData)
-            .expect(200)
-            .then((response) => {
-                expect(response.body.name).toBe(updateUserData.name);
-                expect(response.body.email).toBe(updateUserData.email);
-                expect(response.body.role).toBe(createUserData.role);
-                expect(response.body.registration_number).toBe(createUserData.registration_number);
-            })
+            .set('Authorization', `Bearer ${loginToken}`);
+        
+        expect(updateResponse.status).toBe(200);
+        expect(updateResponse.body.name).toBe(updateUserData.name);
+        expect(updateResponse.body.email).toBe(updateUserData.email);
+        expect(updateResponse.body.role).toBe(createUserData.role);
+        expect(updateResponse.body.registration_number).toBe(createUserData.registration_number);
+    });
 
+    it('should delete an existing user', async () => {
+        const createUserData = { 
+            name: 'User Delete test', 
+            email: 'user.Delete.test@teste.com', 
+            password: 'TesteDelete@1234', 
+            role: 'Teacher', 
+            department: 'Administration' 
+        };
+
+        const userResponse = await request(app).post('/api/users').send(createUserData);
+        const user = userResponse.body;
+
+        const loginResponse = await request(app).post('/api/users/signin').send({ email: createUserData.email, password: createUserData.password });
+        const loginToken = loginResponse.body.token;
+
+        const deleteResponse = await request(app)
+            .delete(`/api/users/${user.id}`)
+            .set('Authorization', `Bearer ${loginToken}`);
+
+        expect(deleteResponse.status).toBe(204);     
     });
 });

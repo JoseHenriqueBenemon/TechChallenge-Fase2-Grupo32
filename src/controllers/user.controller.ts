@@ -4,6 +4,7 @@ import { getUserById } from "../services/user/getUserById.service";
 import { createUser } from "../services/user/createUser.service";
 import { updateUser } from "../services/user/updateUser.service";
 import { loginUser } from "../services/user/loginUser.service";
+import { deleteUser } from "../services/user/deleteUser.service";
 import { formatUserResponse } from "../utils/formatUserResponse.util";
 import { signinUserBodySchema, userBodySchema , userParamsSchema, userQuerySchema } from "../validation/user.schema";
 
@@ -48,6 +49,17 @@ export async function modifyUser(req: Request, res: Response, next: NextFunction
         const modifiedUser = await updateUser(id, { name, email, password, role, registration_number, department, posts });
         res.status(200).json(formatUserResponse(modifiedUser));
     } catch (error) {
+        next(error);
+    }
+}
+
+export async function removeUser(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { id } = userParamsSchema.parse(req.params);
+
+        await deleteUser(id);
+        res.status(204).json()
+    } catch(error) {    
         next(error);
     }
 }
