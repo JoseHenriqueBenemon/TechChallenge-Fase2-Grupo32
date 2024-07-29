@@ -19,6 +19,16 @@ export async function authorize(req: Request, res: Response, next: NextFunction)
         return next();
     }
 
+    if(validateRoute.includes("DELETE-/users/")) {
+        console.log("req:", req.user?.id);
+        console.log("url:", req.url.split("/")[2]);
+        if (req.user?.id !== parseInt(req.url.split("/")[2])) {
+            return next ( new ForbiddenError("You can only delete your own account!"));
+        }
+        
+        return next();
+    }
+
     if(req.user?.role !== 'Teacher') {
         return next(new ForbiddenError("Teachers only can access this path!"));
     }
