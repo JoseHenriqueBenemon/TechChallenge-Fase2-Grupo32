@@ -9,7 +9,7 @@ export const postQuerySchema = z.object({
     limit: z.coerce.number().default(10)
 });
 
-export const searchPostParamsSchem = z.object({
+export const searchPostParamsSchema = z.object({
     keyword: z.string(),
     page: z.coerce.number().default(1),
     limit: z.coerce.number().default(10),
