@@ -7,11 +7,9 @@ const router: Router = express.Router()
 router.post("/users", addUser);
 router.post("/users/signin", signinUser);
 
-router.use(authorize);
-
-router.get("/users", getUsers);
-router.get("/users/:id", getUser);
-router.put("/users/:id", modifyUser);
-router.delete("/users/:id", removeUser);
+router.get("/users", authorize, getUsers);
+router.get("/users/:id", authorize, getUser);
+router.put("/users/:id", authorize, modifyUser);
+router.delete("/users/:id", authorize, removeUser);
 
 export default router;

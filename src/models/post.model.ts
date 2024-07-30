@@ -9,6 +9,9 @@ export class Post implements IPost {
     @PrimaryGeneratedColumn('increment', { name: 'id' })
     id?: number;
 
+    @Column({ name:"user_id", type: "int" })
+    user_id: number;
+
     @Column({ name: 'title', type: 'varchar', length: 100 })
     title: string;
 
@@ -32,7 +35,7 @@ export class Post implements IPost {
 
     @Column({
         name: 'limit_date',
-        type: 'timestamptz'
+        type: 'date'
     })
     limit_date: Date;
 

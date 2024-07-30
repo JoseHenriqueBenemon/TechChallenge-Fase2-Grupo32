@@ -10,6 +10,7 @@ export const userBodySchema = z.object({
     posts: z.array(
         z.object({
             id: z.coerce.number(),
+            user_id: z.coerce.number(),
             title: z.string(),
             description: z.string(),
             category_subject: z.enum(['Math', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography', 'Portuguese', 'English', 'Literature', 'Physical Education', 'Arts', 'Sociology', 'Philosophy']),

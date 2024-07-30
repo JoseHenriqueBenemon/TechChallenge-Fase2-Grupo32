@@ -16,7 +16,7 @@ function isAuthorized(userRole: string, userId: number, method: string, path: st
     if (method === 'DELETE' && path.startsWith('/users/')) {
         return userId === userRouteId;
     }
-
+    
     if (userRole !== 'Teacher') {
         return false;
     }
