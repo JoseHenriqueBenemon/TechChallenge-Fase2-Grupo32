@@ -1,34 +1,40 @@
+import { UnauthorizedError } from "../errors/UnauthorizedError";
 import { ForbiddenError } from "../errors/ForbiddenError";
 import { NextFunction, Request, Response } from "express";
 
+function isAuthorized(userRole: string, userId: number, method: string, path: string): boolean {
+    const userRouteId = parseInt(path.split("/")[2]);
+
+    if (method === 'PUT' && path.startsWith('/users/')) {
+        return userId === userRouteId;
+    }
+
+    if (method === 'GET' && path.startsWith('/users/')) {
+        return userRole === 'Teacher' || (userRole === 'Student' && userId === userRouteId);
+    }
+
+    if (method === 'DELETE' && path.startsWith('/users/')) {
+        return userId === userRouteId;
+    }
+
+    if (userRole !== 'Teacher') {
+        return false;
+    }
+
+    return true;
+}
+
 export async function authorize(req: Request, res: Response, next: NextFunction) {
-    const validateRoute = `${req.method}-${req.path}`;
-    if (validateRoute.includes("PUT-/users/")) {
-        if (req.user?.id !== parseInt(req.url.split("/")[2])) {
-            return next( new ForbiddenError("You can only change your own account!"));
-        }
-        
-        return next();
+    const userRole = req.user?.role;
+    const userId = req.user?.id;
+    const { method, path } = req;
+
+    if(!userRole || !userId) {
+        return next(new UnauthorizedError("Unauthorized request!"));
     }
 
-    if(validateRoute.includes("GET-/users/")) {
-        if (req.user?.role === 'Student' && req.user?.id !== parseInt(req.url.split("/")[2])) {
-            return next( new ForbiddenError("You can only get your own account!"));
-        }
-
-        return next();
-    }
-
-    if(validateRoute.includes("DELETE-/users/")) {
-        if (req.user?.id !== parseInt(req.url.split("/")[2])) {
-            return next ( new ForbiddenError("You can only delete your own account!"));
-        }
-        
-        return next();
-    }
-
-    if(req.user?.role !== 'Teacher') {
-        return next(new ForbiddenError("Teachers only can access this path!"));
+    if(!isAuthorized(userRole, userId, method, path)) { 
+        return next(new ForbiddenError("You do not have permission to access this path!"));
     }
 
     next();
