@@ -23,5 +23,5 @@ export interface IPost{
     limit_date: Date;
     created_at?: Date;
     updated_at?: Date;
-    user?: IUser
+    user?: Partial<IUser>
 }

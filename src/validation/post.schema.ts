@@ -7,13 +7,7 @@ export const postBodySchema = z.object({
     status: z.enum(["Active", "Inactive"]),
     limit_date: z.coerce.date(),
     user: z.object({
-        id: z.coerce.number(),
-        name: z.string(),
-        email: z.string(),
-        password: z.string(),
-        role: z.enum(["Student", "Teacher"]),
-        registration_number: z.string().optional(),
-        department: z.string().optional()
+        id: z.coerce.number()
     }).optional()
 });
 

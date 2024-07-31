@@ -50,3 +50,26 @@ export function isValidPassword(password: string): boolean {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
 }
+
+/**
+ * Adiciona uma quantidade específica de horas a uma data.
+ * @param date - A data original.
+ * @param hours - A quantidade de horas a ser adicionada.
+ * @returns A nova data com as horas adicionadas.
+ */
+export const addHours = (date: Date | string, hours: number): Date => {
+    const result = new Date(date);
+    result.setHours(result.getHours() + hours);
+    return result;
+};
+
+/**
+ * Formata uma data para o padrão brasileiro (dd/mm/aaaa).
+ * @param date - A data a ser formatada.
+ * @returns A data formatada como uma string, ou undefined se a data não estiver definida.
+ */
+export const formatDate = (date: Date | string | undefined): string | undefined => {
+    if (!date) return undefined;
+    const parsedDate = typeof date === 'string' ? new Date(date) : date;
+    return parsedDate.toLocaleDateString("pt-BR");
+};

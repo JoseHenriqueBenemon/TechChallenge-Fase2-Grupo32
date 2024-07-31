@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 import { IPost } from './interfaces/post.interface';
 import { User } from './user.model';
+import { IUser } from './interfaces/user.interface';
 
 @Entity({ 
     name: 'posts' 
@@ -56,5 +57,5 @@ export class Post implements IPost {
         user => user.posts
     )
     @JoinColumn({ name: 'user_id' })
-    user?: User;
+    user?: Partial<IUser>;
 }
