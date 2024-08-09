@@ -1,9 +1,8 @@
 import { postRepository } from "../../repository/post.repository";
 import { NotFoundError } from "../../errors/NotFoundError";
 import { IPost } from "../../models/interfaces/post.interface";
-import { MoreThanOrEqual } from "typeorm";
 
-export async function getPostById(idPost: number): Promise<IPost> {
+export async function getPostById(idPost: number, httpMethod: string): Promise<IPost> {
     const post = await postRepository.findOne({
         relations: ["user"],
         select: {
@@ -20,13 +19,17 @@ export async function getPostById(idPost: number): Promise<IPost> {
             }
         },
         where: {
-            limit_date: MoreThanOrEqual(new Date()),
-            status: "Active",
             id: idPost
         }
     });
 
     if(!post) throw new NotFoundError("Post");
+
+    if (httpMethod === "GET") {
+        if (post.status !== "Active" || (new Date(post.limit_date).setHours(0)) < (new Date().setHours(-3))) {
+            throw new NotFoundError(`Postagem com ID ${idPost}`);
+        }
+    }
 
     return post;
 }
