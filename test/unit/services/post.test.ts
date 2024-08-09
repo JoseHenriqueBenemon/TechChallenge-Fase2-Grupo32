@@ -44,7 +44,7 @@ describe('Post API', () => {
         };
 
         const responsePost = await request(app)
-            .post('/api/posts/')
+            .post('/api/posts')
             .send(postPostData)
             .set('Authorization', `Bearer ${loginToken}`);
 
@@ -62,5 +62,54 @@ describe('Post API', () => {
         expect(responsePost.body).toHaveProperty('created_at');
         expect(responsePost.body).toHaveProperty('updated_at');
         expect(responsePost.body).toHaveProperty('user_id');
+    });
+
+    it('Should update an existing post', async () => {
+        const user = {
+            name: "Nome Sobrenome",
+            email: "nomedeusuario@provedor.com",
+            password: "Teste!234",
+            role: "Teacher",
+            department: "Administração"
+        }
+        
+        const userResponse = await request(app).post('/api/users').send(user);
+
+        expect(userResponse.statusCode).toBe(201);
+        expect(userResponse.body).toEqual(expect.objectContaining({
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            department: user.department
+        }));
+
+        const loginResponse = await request(app).post('/api/users/signin').send({ email: user.email, password: user.password });
+        const loginToken = loginResponse.body.token;
+
+        const post = {
+            title: "Titulo",
+            description: "Descrição",
+            category_subject: "Portuguese",
+            status: "Active",
+            limit_date: "09/01/2024"
+        }
+
+        const responsePost = await request(app).post('/api/posts').send(post).set('Authorization', `Bearer ${loginToken}`);
+
+        const updatedPost = {
+            title: "Title",
+            description: "Description",
+            category_subject: "English",
+            limit_date: "10/01/2024"
+        }
+
+        const putResponse = await request(app).put(`/api/posts/${responsePost.body.id}`).send(updatedPost).set('Authorization', `Bearer ${loginToken}`);
+
+        expect(putResponse.status).toBe(200);
+        expect(putResponse.body.title).toBe(updatedPost.title);
+        expect(putResponse.body.description).toBe(updatedPost.description);
+        expect(putResponse.body.category_subject).toBe(updatedPost.category_subject);
+        expect(putResponse.body.status).toBe(post.status);
+        expect(putResponse.body.limit_date).toBe(updatedPost.limit_date);
     });
 });
