@@ -66,7 +66,7 @@ describe('Post API', () => {
 
     it('Should update an existing post', async () => {
         const user = {
-            name: "Nome Sobrenome",
+            name: "Nome",
             email: "nomedeusuario@provedor.com",
             password: "Teste!234",
             role: "Teacher",
