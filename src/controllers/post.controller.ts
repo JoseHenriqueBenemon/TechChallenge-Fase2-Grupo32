@@ -3,6 +3,7 @@ import { getAllPosts } from "../services/post/getAllPosts.service";
 import { createPost } from "../services/post/createPost.service";
 import { updatePost } from "../services/post/updatePost.service";
 import { deletePost } from "../services/post/deletePost.service";
+import { getAllPostsAdmin } from "../services/post/getAllPostsAdmin.service";
 import { getPostsByKeyword } from "../services/post/getPostsByKeyword.service";
 import { NextFunction, Request, Response } from "express";
 import { postBodySchema, postParamsSchema, postQuerySchema, searchPostParamsSchema } from "../validation/post.schema";
@@ -10,7 +11,7 @@ import { formatPostResponse } from "../utils/formatPostResponse.util";
 
 export async function getPosts(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { page, limit} = postQuerySchema.parse(req.query);
+        const { page, limit } = postQuerySchema.parse(req.query);
 
         const posts = await getAllPosts(page, limit);
         res.status(200).json(posts.map(formatPostResponse));
@@ -77,4 +78,13 @@ export async function removePost(req: Request, res: Response, next: NextFunction
     }
 }
 
-    
+export async function getPostsAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const { page, limit } = postQuerySchema.parse(req.query);
+        const posts = await getAllPostsAdmin(page, limit);
+        
+        res.status(200).json(posts.map(formatPostResponse));
+    } catch (error) {
+        next(error)
+    }
+}
