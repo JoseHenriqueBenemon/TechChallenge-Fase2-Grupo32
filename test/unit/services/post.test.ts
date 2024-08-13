@@ -112,4 +112,41 @@ describe('Post API', () => {
         expect(putResponse.body.status).toBe(post.status);
         expect(putResponse.body.limit_date).toBe(updatedPost.limit_date);
     });
+
+    it('Should delete an existing post', async () => {
+        const user = {
+            name: "Nome Sobrenome",
+            email: "usuario@provedor.com",
+            password: "Teste!234",
+            role: "Teacher",
+            department: "Administração"
+        }
+
+        const userResponse = await request(app).post('/api/users').send(user);
+
+        expect(userResponse.statusCode).toBe(201);
+        expect(userResponse.body).toEqual(expect.objectContaining({
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            department: user.department
+        }));
+
+        const loginResponse = await request(app).post('/api/users/signin').send({ email: user.email, password: user.password });
+        const loginToken = loginResponse.body.token;
+
+        const post =  {
+            title: "Título",
+            description: "Descrição",
+            category_subject: "Portuguese",
+            status: "Active",
+            limit_date: "10/01/2024"
+        };
+
+        const postResponse = await request(app).post('/api/posts').send(post).set('Authorization', `Bearer ${loginToken}`);
+        const createdPost = postResponse.body;
+        const deleteResponse = await request(app).delete(`/api/posts/${createdPost.id}`).set('Authorization', `Bearer ${loginToken}`);
+
+        expect(deleteResponse.status).toBe(204);
+    });
 });
