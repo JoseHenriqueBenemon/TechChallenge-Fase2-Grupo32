@@ -33,8 +33,12 @@ jobs:
       - name: Connect to PostgreSQL
         run: node dist/src/server.js
         env:
+          HOST: 0.0.0.0
+          PORT: 3000
+          ENV: production
           POSTGRES_HOST: postgres
           POSTGRES_PORT: 5432
           POSTGRES_USER: user
-          POSTGRES_PASSWORD: postgres
-          JWT_SECRET: batman
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          DATABASE_NAME: techchallengeposts
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
