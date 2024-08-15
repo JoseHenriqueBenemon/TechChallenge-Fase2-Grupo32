@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Connect to PostgreSQL
-        run: node dist/app.js
+        run: node dist/src/server.js
         env:
           POSTGRES_HOST: postgres
           POSTGRES_PORT: 5432
