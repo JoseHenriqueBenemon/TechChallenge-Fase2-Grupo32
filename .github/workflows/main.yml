@@ -24,6 +24,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Install PostgreSQL Client
+        run: apt-get update && apt-get install -y postgresql-client
+
       - name: Install dependencies
         run: npm ci
 
@@ -32,7 +35,7 @@ jobs:
       
       - name: Set up the database
         run: |
-          psql -h postgres -U user -d postgres -a -f db/dump_techchallengeposts.sql
+          psql -h postgres -U user -d postgres -a -f ./db/dump_techchallengeposts.sql
         env:
           PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
