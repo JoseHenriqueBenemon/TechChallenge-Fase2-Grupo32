@@ -1,4 +1,4 @@
-name: PostgreSQL service example
+name: PostgreSQL service
 on: push
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Connect to PostgreSQL
-        run: node server.js
+        run: node app.js
         env:
           POSTGRES_HOST: postgres
           POSTGRES_PORT: 5432
