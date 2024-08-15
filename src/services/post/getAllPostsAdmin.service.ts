@@ -1,6 +1,6 @@
-import { IPost } from "models/interfaces/post.interface";
-import { postRepository } from "repository/post.repository";
-import { calculateOffset } from "utils/helper.util";
+import { IPost } from "../../models/interfaces/post.interface";
+import { postRepository } from "../../repository/post.repository";
+import { calculateOffset } from "../../utils/helper.util";
 
 export async function getAllPostsAdmin(page: number, limit: number): Promise<IPost[]> {
     const skip = calculateOffset(page, limit);
