@@ -1,5 +1,9 @@
 SET timezone = 'America/Sao_Paulo';
 
+CREATE DATABASE techchallengeposts;
+
+\c techchallengeposts
+
 CREATE TYPE user_role AS ENUM('Student', 'Teacher');
 
 CREATE TYPE post_category_subject AS ENUM(
