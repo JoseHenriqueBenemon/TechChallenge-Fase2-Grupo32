@@ -26,7 +26,7 @@ export async function getPostById(idPost: number, httpMethod: string): Promise<I
     if(!post) throw new NotFoundError("Post");
 
     if (httpMethod === "GET") {
-        if (post.status !== "Active" || (new Date(post.limit_date).setHours(0)) < (new Date().setHours(-3))) {
+        if (post.status !== "Active" || (new Date(post.limit_date).setHours(23, 59)) < (new Date().setHours(-3))) {
             throw new NotFoundError(`Postagem com ID ${idPost}`);
         }
     }
