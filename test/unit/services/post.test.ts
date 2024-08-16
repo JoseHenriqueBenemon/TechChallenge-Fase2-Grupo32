@@ -91,18 +91,21 @@ describe('Post API', () => {
             description: "Descrição",
             category_subject: "Portuguese",
             status: "Active",
-            limit_date: "09/01/2024"
+            limit_date: "2024-09-01"
         }
 
         const responsePost = await request(app).post('/api/posts').send(post).set('Authorization', `Bearer ${loginToken}`);
 
+        
         const updatedPost = {
             title: "Title",
             description: "Description",
             category_subject: "English",
-            limit_date: "10/01/2024"
+            limit_date: "2024-10-01"
         }
 
+        const expectedLimitDate = addHours(updatedPost.limit_date, 3).toLocaleDateString("pt-BR");
+        
         const putResponse = await request(app).put(`/api/posts/${responsePost.body.id}`).send(updatedPost).set('Authorization', `Bearer ${loginToken}`);
 
         expect(putResponse.status).toBe(200);
@@ -110,7 +113,7 @@ describe('Post API', () => {
         expect(putResponse.body.description).toBe(updatedPost.description);
         expect(putResponse.body.category_subject).toBe(updatedPost.category_subject);
         expect(putResponse.body.status).toBe(post.status);
-        expect(putResponse.body.limit_date).toBe(updatedPost.limit_date);
+        expect(putResponse.body.limit_date).toBe(expectedLimitDate);
     });
 
     it('Should delete an existing post', async () => {
@@ -140,7 +143,7 @@ describe('Post API', () => {
             description: "Descrição",
             category_subject: "Portuguese",
             status: "Active",
-            limit_date: "10/01/2024"
+            limit_date: "2024-10-01"
         };
 
         const postResponse = await request(app).post('/api/posts').send(post).set('Authorization', `Bearer ${loginToken}`);

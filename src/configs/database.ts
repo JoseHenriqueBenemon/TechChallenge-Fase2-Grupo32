@@ -12,7 +12,8 @@ export const appDataSource = new DataSource({
     database: env.DATABASE_NAME,
     logging: env.NODE_ENV === "development",
     entities: [Post, User],
-    migrations: []
+    migrations: [],
+    synchronize: true
 });
 
 appDataSource.initialize()
