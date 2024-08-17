@@ -32,12 +32,6 @@ jobs:
 
       - name: Compile TypeScript
         run: npm run build
-      
-      - name: Set up the database
-        run: |
-          psql -h postgres -U user -d postgres -a -f ./db/dump_techchallengeposts.sql
-        env:
-          PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
       - name: Connect to PostgreSQL
         run: node dist/src/server.js
@@ -45,9 +39,9 @@ jobs:
           HOST: 0.0.0.0
           PORT: 3000
           ENV: production
-          DATABASE_HOST: postgres
-          DATABASE_PORT: 5432
-          DATABASE_USER: user
-          DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          DATABASE_NAME: techchallengeposts
+          DATABASE_HOST: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
