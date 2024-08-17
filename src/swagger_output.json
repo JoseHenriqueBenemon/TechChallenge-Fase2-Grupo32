@@ -1,0 +1,370 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TechChallenge",
+    "version": "v1.0.0",
+    "description": "Documentação grupo 32"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/posts/search": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/posts/admin": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "PostRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  }
+                }
+              },
+              "title": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "category_subject": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "status": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "limit_date": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              },
+              "user": {
+                "$ref": "#/components/schemas/UserRequest"
+              }
+            }
+          }
+        }
+      },
+      "UserRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "password": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "role": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "registration_number": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "array",
+                    "example": [
+                      "string",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "department": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "array",
+                    "example": [
+                      "string",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "posts": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "array"
+                  },
+                  "items": {
+                    "$ref": "#/components/schemas/PostRequest"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
