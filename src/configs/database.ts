@@ -15,7 +15,7 @@ export const appDataSource = new DataSource({
     logging: env.NODE_ENV === "development",
     ssl: {
         rejectUnauthorized: true,
-        ca: fs.readFileSync(path.join(__dirname, '../../certs/ca.pem')).toString()
+        ca: fs.readFileSync(path.join(__dirname, '../../../certs/ca.pem')).toString()
     },
     entities: [Post, User],
     migrations: [],
