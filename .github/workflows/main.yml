@@ -24,6 +24,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Set up SSL certificates
+        run: |
+          mkdir -p certs
+          echo "${{ secrets.CA_CERT }}" > certs/ca.pem
+          
       - name: Install PostgreSQL Client
         run: apt-get update && apt-get install -y postgresql-client
 
