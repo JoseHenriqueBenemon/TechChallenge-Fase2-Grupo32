@@ -13,7 +13,7 @@ export const appDataSource = new DataSource({
     logging: env.NODE_ENV === "development",
     entities: [Post, User],
     migrations: [],
-    synchronize: true
+    synchronize: false
 });
 
 appDataSource.initialize()
