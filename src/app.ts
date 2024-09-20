@@ -6,8 +6,11 @@ import { authValidation } from "./middlewares/authentication";
 import swaggerUi from 'swagger-ui-express';
 import swaggerOutPut from "./swagger_output.json";
 import 'express-async-errors';
+import cors from 'cors';
 
 export const app: Express = express();
+
+app.use(cors());
 
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutPut));
 
