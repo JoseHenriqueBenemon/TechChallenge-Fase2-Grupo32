@@ -68,8 +68,8 @@ export async function signinUser(req: Request, res: Response, next: NextFunction
     try {
         const { email, password } = signinUserBodySchema.parse(req.body);
 
-        const token = await loginUser(email, password);
-        res.status(200).json({ token });
+        const { token, role } = await loginUser(email, password);
+        res.status(200).json({ token, role });
     } catch (error) {
         next(error);
     }

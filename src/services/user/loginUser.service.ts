@@ -19,5 +19,5 @@ export async function  loginUser(email: string, password: string) {
         { expiresIn: "1h" }
     );
 
-    return token;
+    return { token: token, role: user.role };
 }
